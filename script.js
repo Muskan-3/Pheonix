@@ -108,3 +108,106 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// solution part
+// solutions-section.js — reveal animations and small interactions
+document.addEventListener('DOMContentLoaded', () => {
+  const revealTargets = document.querySelectorAll('#solutions .media-frame, #solutions .media-badge, #solutions .solutions-content, #solutions .feature, #solutions .btn-learn');
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    revealTargets.forEach(el => io.observe(el));
+  } else {
+    revealTargets.forEach(el => el.classList.add('in-view'));
+  }
+
+  // Feature button demo click (highlight)
+  const features = document.querySelectorAll('#featuresGrid .feature');
+  features.forEach(f => {
+    f.addEventListener('click', () => {
+      f.classList.add('active');
+      setTimeout(() => f.classList.remove('active'), 800);
+    });
+  });
+
+  // Learn More smooth-scroll
+  const btn = document.querySelector('.btn-learn');
+  if (btn) {
+    btn.addEventListener('click', (e) => {
+      const href = btn.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  }
+});
+// about section js 
+// about-section.js — reveal animations for About section
+document.addEventListener('DOMContentLoaded', () => {
+  const targets = document.querySelectorAll('#about-company .media-frame, #about-company .media-badge, #about-company .testimonial, #about-company .about-content, #about-company .stat');
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { root: null, rootMargin: '0px 0px -80px 0px', threshold: 0.12 });
+
+    targets.forEach(t => io.observe(t));
+  } else {
+    targets.forEach(t => t.classList.add('in-view'));
+  }
+
+  // Optional: make clicking testimonial focus it
+  const testimonial = document.querySelector('#about-company .testimonial');
+  if (testimonial) {
+    testimonial.addEventListener('click', () => {
+      testimonial.classList.add('in-view');
+      setTimeout(() => testimonial.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+    });
+  }
+});
+
+
+// why us 
+// features-section.js — reveal on scroll + small interactions
+document.addEventListener('DOMContentLoaded', () => {
+  const targets = document.querySelectorAll('#features .card, #features .wide, #features .small-card');
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+
+    targets.forEach(t => io.observe(t));
+  } else {
+    targets.forEach(t => t.classList.add('in-view'));
+  }
+
+  // optional: keyboard & click focus for small features
+  document.querySelectorAll('#features .feature-card, #features .small-card, #features .wide').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { el.classList.add('in-view'); setTimeout(()=>el.classList.remove('in-view'),400); }
+    });
+  });
+});
