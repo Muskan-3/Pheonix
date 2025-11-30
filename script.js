@@ -211,3 +211,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// new 
+// cta-contact.js — reveal animation + smooth scroll to #contact
+document.addEventListener('DOMContentLoaded', () => {
+  // reveal pills and cards
+  const targets = document.querySelectorAll('.btn-primary, .pill, .contact-card');
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    targets.forEach(t => io.observe(t));
+  } else {
+    targets.forEach(t => t.classList.add('in-view'));
+  }
+
+  // smooth scroll for primary CTA if in-page anchor
+  const primaryCTA = document.querySelector('.btn-primary');
+  if (primaryCTA) {
+    primaryCTA.addEventListener('click', (e) => {
+      const href = primaryCTA.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  }
+});
+
+// footer
+// footer.js - small behavior: set year and handle subscribe
+document.addEventListener('DOMContentLoaded', function () {
+  // set current year
+  const yearEl = document.getElementById('footerYear');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // handle subscribe form
+  const form = document.getElementById('footerSubscribe');
+  const email = document.getElementById('subscribeEmail');
+
+  if (form && email) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const val = email.value.trim();
+
+      // basic email validation
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      if (!isEmail) {
+        email.classList.add('invalid');
+        email.focus();
+        // brief shake
+        email.animate([
+          { transform: 'translateX(0)' },
+          { transform: 'translateX(-6px)' },
+          { transform: 'translateX(6px)' },
+          { transform: 'translateX(0)' }
+        ], { duration: 300 });
+        return;
+      }
+
+      // simulate success - replace this with real AJAX if needed
+      form.innerHTML = '<div class="subscribe-success">Thanks! You are subscribed.</div>';
+    });
+  }
+});
+
