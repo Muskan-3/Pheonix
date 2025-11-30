@@ -74,9 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 // services 
-// services.js — reveal animation for service cards + CTA focus
+// services-images-full.js — reveal animation + CTA scroll
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('#servicesGrid .svc-card');
+
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -89,15 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cards.forEach(c => io.observe(c));
   } else {
-    // fallback: reveal all
     cards.forEach(c => c.classList.add('in-view'));
   }
 
-  // small CTA click focus
+  // CTA click smooth scroll (if contact anchor exists)
   const svcContactBtn = document.getElementById('svcContactBtn');
   if (svcContactBtn) {
     svcContactBtn.addEventListener('click', (e) => {
-      // smooth scroll to contact if anchor exists
       const href = svcContactBtn.getAttribute('href');
       if (href && href.startsWith('#')) {
         const target = document.querySelector(href);
