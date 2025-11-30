@@ -838,3 +838,100 @@ body{
   margin-bottom: 40px;
   opacity: 0.9;
 }
+/* appointment css */
+.container{ max-width:var(--container); margin:0 auto; padding:0 20px; }
+
+/* Hero section */
+.hero-cta{
+  position:relative;
+  display:block;
+  min-height:520px;          /* base height, increase if you want taller */
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* background image element (keeps semantics separate) */
+.hero-bg{
+  position:absolute;
+  inset:0;
+  background-image: url("images/Mall\ Hoardings\ -\ 1\ \(1\).jpg"); /* <-- replace with your filename */
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  filter: saturate(.8) contrast(.9);
+  transform: scale(1.03);
+  will-change: transform;
+}
+
+/* soft dark gradient overlay for legibility */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(2,6,23,0.7) 0%, rgba(2,6,23,0.72) 40%, rgba(2,6,23,0.85) 100%),
+    radial-gradient(800px 400px at 20% 30%, rgba(249,115,22,0.03), transparent 10%);
+}
+
+/* inner content */
+.hero-inner{
+  position:relative;
+  z-index:10;
+  text-align:center;
+  padding:84px 20px;
+}
+
+/* eyebrow */
+.eyebrow{
+  color: rgba(255,255,255,0.12);
+  font-weight:700;
+  letter-spacing:2px;
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+/* main title */
+.hero-title{
+  margin:0 auto 28px;
+  max-width:1100px;
+  font-size: clamp(30px, 6.4vw, 40px);
+  line-height:1.20;
+  font-weight:800;
+  color: #f97316;
+  text-shadow: 0 6px 36px rgba(2,6,23,0.6);
+}
+
+/* CTA button outlined style */
+.btn-outline{
+  display:inline-block;
+  padding:16px 36px;
+  border-radius:6px;
+  border:2px solid rgba(255,255,255,0.18);
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:2px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  background: transparent;
+  box-shadow: 0 12px 36px rgba(2,6,23,0.6);
+}
+
+/* hover effect: orange glow */
+.btn-outline:hover{
+  transform: translateY(-6px);
+  border-color: rgba(249,115,22,0.95);
+  box-shadow: 0 26px 60px rgba(249,115,22,0.14);
+}
+
+/* small responsive tweaks */
+@media (max-width:900px){
+  .hero-cta{ min-height:420px; }
+  .hero-title{ font-size: clamp(22px, 7.5vw, 44px); }
+  .btn-outline{ padding:12px 22px; }
+}
+@media (max-width:520px){
+  .hero-cta{ min-height:360px; padding:24px 0; }
+  .eyebrow{ font-size:11px; margin-bottom:12px; }
+  .hero-title{ font-size:22px; line-height:1.08; }
+}

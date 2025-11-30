@@ -286,3 +286,64 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+// aapointmen js
+
+// // hero-cta.js
+// 1) reveal animation for the hero content when it scrolls into view
+// 2) smooth scroll when CTA links to in-page anchor (#contact)
+
+document.addEventListener('DOMContentLoaded', () => {
+  const heroInner = document.querySelector('.hero-inner');
+  if (!heroInner) return;
+
+  // small entrance animation using IntersectionObserver
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          heroInner.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(.2,.9,.2,1)';
+          heroInner.style.opacity = '1';
+          heroInner.style.transform = 'translateY(0)';
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // start in hidden state
+    heroInner.style.opacity = '0';
+    heroInner.style.transform = 'translateY(12px)';
+    io.observe(heroInner);
+  } else {
+    heroInner.style.opacity = '1';
+  }
+
+  // parallax-like slow scale effect on scroll (subtle)
+  const bg = document.querySelector('.hero-bg');
+  if (bg) {
+    const onScroll = () => {
+      const rect = bg.getBoundingClientRect();
+      const mid = window.innerHeight / 2;
+      // compute relative offset (-1..1)
+      const rel = (rect.top + rect.height/2 - mid) / mid;
+      // clamp and map to a small scale
+      const scale = 1.03 - Math.min(Math.max(rel * 0.02, -0.02), 0.02);
+      bg.style.transform = `scale(${scale})`;
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  }
+
+  // smooth scroll for CTA
+  const scheduleBtn = document.getElementById('scheduleBtn');
+  if (scheduleBtn) {
+    scheduleBtn.addEventListener('click', function(e){
+      const href = this.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+});
