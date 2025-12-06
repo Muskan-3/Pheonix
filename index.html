@@ -13,20 +13,13 @@
   <link href="services-images-full.css" rel="stylesheet" />
 </head>
 <body class="theme-dark">
+<!-- Background mesh canvas (place as first child of <body>) -->
+<canvas id="bgMeshCanvas" aria-hidden="true"></canvas>
 
   <!-- skip link for keyboard users -->
   <a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
     Skip to content
   </a>
-
-  <!-- PRELOADER -->
-  <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Loading homepage">
-    <div class="preloader-inner" aria-hidden="false">
-      <div class="loader-percent" id="loaderPercent">0%</div>
-      <div class="loader-track" aria-hidden="true"><div id="loaderFill" class="loader-fill" style="width:0%"></div></div>
-      <div class="loader-text">Loading homepage…</div>
-    </div>
-  </div>
 
   <!-- SITE HEADER -->
   <header class="site-header" role="banner">

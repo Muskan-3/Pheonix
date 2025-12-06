@@ -53,25 +53,127 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 220);
   }
 
-  // Mobile nav toggle
+  // Responsive nav toggle with backdrop, ESC handling, focus trap
+(function () {
   const menuToggle = document.getElementById('menuToggle');
   const navList = document.getElementById('navList');
-  if (menuToggle) {
-    menuToggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      const expanded = this.getAttribute('aria-expanded') === 'true';
-      this.setAttribute('aria-expanded', String(!expanded));
-      navList.classList.toggle('show');
-    });
+  if (!menuToggle || !navList) return;
+
+  // create a backdrop element (insert once)
+  let backdrop = document.querySelector('.nav-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.className = 'nav-backdrop';
+    document.body.appendChild(backdrop);
   }
 
-  // Close nav when clicking outside on small screens
-  document.addEventListener('click', function (e) {
-    if (!navList.contains(e.target) && !menuToggle.contains(e.target)) {
-      navList.classList.remove('show');
-      if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+  // helper: open / close
+  function openNav() {
+    menuToggle.setAttribute('aria-expanded', 'true');
+    navList.classList.add('show');
+    navList.setAttribute('aria-hidden', 'false');
+    backdrop.classList.add('visible');
+    document.body.classList.add('nav-open'); // use to disable scroll
+    disableBodyScroll(true);
+    // focus first link for quick keyboard navigation
+    const first = navList.querySelector('a, button, [tabindex]:not([tabindex="-1"])');
+    if (first) first.focus();
+    trapFocus(navList);
+  }
+
+  function closeNav() {
+    menuToggle.setAttribute('aria-expanded', 'false');
+    navList.classList.remove('show');
+    navList.setAttribute('aria-hidden', 'true');
+    backdrop.classList.remove('visible');
+    document.body.classList.remove('nav-open');
+    disableBodyScroll(false);
+    releaseFocusTrap();
+    // return focus to toggle button
+    menuToggle.focus();
+  }
+
+  // Basic body scroll disable (adds inline style)
+  function disableBodyScroll(disable) {
+    if (disable) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Toggle handler
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+    if (isOpen) closeNav(); else openNav();
+  });
+
+  // close when clicking backdrop
+  backdrop.addEventListener('click', closeNav);
+
+  // click outside to close (touch-friendly)
+  document.addEventListener('click', (e) => {
+    if (!navList.classList.contains('show')) return;
+    if (navList.contains(e.target) || menuToggle.contains(e.target) || backdrop.contains(e.target)) return;
+    closeNav();
+  }, { passive: true });
+
+  // Esc to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navList.classList.contains('show')) {
+      closeNav();
     }
   });
+
+  // ---- Focus trap (small, robust) ----
+  let focusTrapActive = false;
+  let focusableNodes = [];
+  let firstNode = null;
+  let lastNode = null;
+
+  function trapFocus(container) {
+    focusableNodes = Array.from(container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+      .filter(n => n.offsetParent !== null);
+    if (focusableNodes.length === 0) return;
+    firstNode = focusableNodes[0];
+    lastNode = focusableNodes[focusableNodes.length - 1];
+    focusTrapActive = true;
+    document.addEventListener('keydown', focusTrapHandler);
+  }
+
+  function releaseFocusTrap() {
+    focusTrapActive = false;
+    document.removeEventListener('keydown', focusTrapHandler);
+  }
+
+  function focusTrapHandler(e) {
+    if (!focusTrapActive) return;
+    if (e.key !== 'Tab') return;
+    if (focusableNodes.length === 0) return;
+
+    const active = document.activeElement;
+    if (e.shiftKey && active === firstNode) {
+      // shift+tab on first -> go to last
+      e.preventDefault();
+      lastNode.focus();
+    } else if (!e.shiftKey && active === lastNode) {
+      // tab on last -> go to first
+      e.preventDefault();
+      firstNode.focus();
+    }
+  }
+
+  // ensure ARIA defaults
+  if (!navList.hasAttribute('aria-hidden')) navList.setAttribute('aria-hidden', 'true');
+  if (!menuToggle.hasAttribute('aria-expanded')) menuToggle.setAttribute('aria-expanded', 'false');
+
+  // ensure menu toggle is keyboard-focusable & labeled
+  if (!menuToggle.hasAttribute('aria-controls')) menuToggle.setAttribute('aria-controls', navList.id || 'navList');
+  if (!menuToggle.hasAttribute('aria-label')) menuToggle.setAttribute('aria-label', 'Toggle navigation');
+})();
 
   // Set year in footer
   const yearEl = document.getElementById('year');
@@ -918,4 +1020,159 @@ document.getElementById("footerYear").textContent = new Date().getFullYear();
   }, { passive: true });
 
 })();
+/* ===== Global background mesh: blue dots + connecting lines (desktop + mobile) ===== */
+(function bgMesh() {
+  if (typeof window === 'undefined') return;
 
+  // Respect reduced motion
+  const prefersReduced = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  const canvas = document.getElementById('bgMeshCanvas');
+  if (!canvas || !canvas.getContext) return;
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  const MAX_DPR = 1.6;
+  const nodes = [];
+
+  function isSmall() {
+    return window.innerWidth < 900; // just changes density, does NOT disable
+  }
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function initNodes() {
+    nodes.length = 0;
+
+    const count = isSmall() ? 18 : 40;       // fewer on phones, more on desktop
+    const speed = isSmall() ? 0.06 : 0.12;   // saved on each node
+    const DOT_MIN = 1;
+    const DOT_MAX = 2;
+
+    for (let i = 0; i < count; i++) {
+      const bias = Math.random();
+      let x, y;
+
+      // bias clusters so it looks like your reference
+      if (bias > 0.6) {
+        x = width * (0.55 + Math.random() * 0.4); // right/top
+        y = height * (0.04 + Math.random() * 0.32);
+      } else if (bias > 0.3) {
+        x = width * (0.08 + Math.random() * 0.35); // left/mid
+        y = height * (0.2 + Math.random() * 0.35);
+      } else {
+        x = Math.random() * width;
+        y = Math.random() * height;
+      }
+
+      nodes.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        r: DOT_MIN + Math.random() * (DOT_MAX - DOT_MIN),
+        phase: Math.random() * Math.PI * 2,
+        baseSpeed: speed
+      });
+    }
+  }
+
+  function drawFrame(now) {
+    ctx.clearRect(0, 0, width, height);
+
+    // subtle dark wash so effect is visible
+    ctx.fillStyle = 'rgba(3, 8, 18, 0.78)';
+    ctx.fillRect(0, 0, width, height);
+
+    const CONNECT_DIST = isSmall() ? 110 : 220;
+    const COLOR = { r: 12, g: 140, b: 190 };
+
+    // move nodes
+    for (const n of nodes) {
+      const nx = Math.sin((n.x * 0.0012) + now * 0.00013 + n.phase) * 0.08;
+      const ny = Math.cos((n.y * 0.0011) + now * 0.00011 + n.phase) * 0.08;
+      n.vx += nx * 0.02;
+      n.vy += ny * 0.02;
+      n.vx *= 0.994;
+      n.vy *= 0.994;
+      n.x += n.vx * (n.baseSpeed * 8);
+      n.y += n.vy * (n.baseSpeed * 8);
+
+      // wrap edges
+      if (n.x < -30) n.x = width + 30;
+      if (n.x > width + 30) n.x = -30;
+      if (n.y < -30) n.y = height + 30;
+      if (n.y > height + 30) n.y = -30;
+
+      n.phase += 0.003;
+    }
+
+    // lines
+    ctx.lineWidth = 1;
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const d = Math.hypot(dx, dy);
+        if (d > CONNECT_DIST) continue;
+        const alpha = 0.09 * (1 - d / CONNECT_DIST);
+        ctx.strokeStyle = `rgba(${COLOR.r}, ${COLOR.g}, ${COLOR.b}, ${alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+    }
+
+    // dots
+    for (const n of nodes) {
+      // halo
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${COLOR.r}, ${COLOR.g}, ${COLOR.b}, ${0.08 * n.r})`;
+      ctx.arc(n.x, n.y, n.r * 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // core
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${COLOR.r}, ${COLOR.g}, ${COLOR.b}, 1)`;
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(drawFrame);
+  }
+
+  // initial setup
+  resize();
+  initNodes();
+  requestAnimationFrame(drawFrame);
+
+  // handle resize
+  let resizeTO;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTO);
+    resizeTO = setTimeout(() => {
+      resize();
+      initNodes();
+    }, 120);
+  }, { passive: true });
+
+})();
