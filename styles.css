@@ -970,7 +970,7 @@ backdrop-filter: blur(8px);
   color: var(--text);
   font-size: clamp(28px, 4.6vw, 64px);
   font-weight: 800;
-  line-height: 1.06;
+  line-height: 1.02;
   margin: 4px 0 18px;
   letter-spacing: -0.02em;
 }
@@ -2114,8 +2114,7 @@ main {
   margin-top: 0 !important;
 }
 
-/* Force CTA title to stay on one line */
-.cta-panel .cta-title,
-.cta-title {
+.cta-panel h2,
+.cta-panel h3 {
   white-space: nowrap !important;
 }
