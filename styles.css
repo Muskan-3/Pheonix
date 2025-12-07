@@ -553,145 +553,6 @@ body > *:not(#bgMeshCanvas) { position: relative; z-index: 1; }
   .svc-card, .svc-card::before, .svc-card::after { transition: none !important; transform: none !important; opacity: 1 !important; filter: none !important; }
 }
 
-
-/* ------------------------- */
-/* SOLUTIONS SECTION         */
-/* ------------------------- */
-
-.solutions-section {
-  padding: 100px 0;
-  background: var(--bg);
-  position: relative;
-  overflow: hidden;
-}
-
-.solutions-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-
-/* ------------------------- */
-/* MEDIA SIDE                */
-/* ------------------------- */
-
-.solutions-media {
-  position: relative;
-}
-
-.media-frame {
-  position: relative;
-  width: 100%;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: var(--glass);
-}
-
-.media-img {
-  width: 100%;
-  display: block;
-  border-radius: inherit;
-  transition: transform 0.8s ease;
-}
-
-.media-frame:hover .media-img {
-  transform: scale(1.06);
-}
-
-/* Decorative corner */
-.decor-corner {
-  width: 60px;
-  height: 60px;
-  border-top: 3px solid var(--accent-warm);
-  border-right: 3px solid var(--accent-warm);
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  pointer-events: none;
-}
-
-/* ------------------------- */
-/* MEDIA BADGE               */
-/* ------------------------- */
-
-.media-badge {
-  position: absolute;
-  bottom: -20px;
-  right: -20px;
-  background: linear-gradient(135deg, var(--accent-warm), #ffbb6c);
-  padding: 14px 22px;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.3);
-  transition: transform 0.25s ease;
-}
-
-.media-badge:hover {
-  transform: translateY(-6px);
-}
-
-.badge-icon {
-  font-size: 22px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.badge-text {
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-  font-weight: 600;
-  line-height: 1.1;
-  padding-bottom: 23px;
-  padding-right:15px;
-}
-
-.badge-title {
-  opacity: 0.9;
-  font-size: 14px;
-}
-
-.badge-sub {
-  font-size: 17px;
-}
-
-/* ------------------------- */
-/* CONTENT SIDE              */
-/* ------------------------- */
-
-.eyebrow {
-  color: var(--accent-warm);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  margin-bottom: 14px;
-}
-
-.solutions-title {
-  color: var(--text);
-  font-size: 40px;
-  line-height: 1.2;
-  margin-bottom: 18px;
-}
-
-.solutions-title .em {
-  background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.solutions-lead {
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 40px;
-  max-width: 540px;
-}
-
 /* Core Values section — dark blue glass theme (uses :root variables) */
 .values-section {
   padding: 52px 18px;
@@ -1237,170 +1098,11 @@ backdrop-filter: blur(8px);
   box-shadow: 0 8px 20px rgba(0,180,255,0.15);
   background: rgba(0,180,255,0.06);
 }
-
 /* -------------------------
-   ABOUT SECTION — Improved Alignment
-   Paste to replace previous about-section rules
-   ------------------------- */
-
-.about-section {
-  background: transparent;
-  color: var(--muted);
-  padding: 80px 18px;
-  position: relative;
-  overflow: visible;
-}
-
-/* Stable two-column layout:
-   - left column is a fixed media column for consistent alignment
-   - right column is flexible content
-*/
-.about-inner {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 0 16px;
-  display: grid;
-  grid-template-columns: 520px 1fr;
-  gap: 48px;
-  align-items: start;
-  position: relative;
-}
-
-/* MEDIA COLUMN
-   media-wrap keeps the testimonial contained and aligned relative to the media */
-.about-media {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* media frame (image) */
-.media-frame {
-  width: 100%;
-  height: 420px;
-  border-radius: calc(var(--radius) + 4px);
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.04);
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  box-shadow: 0 18px 50px rgba(2,6,23,0.55);
-  display: block;
-}
-
-/* image fills frame */
-.media-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transform-origin: center;
-  transition: transform 0.9s cubic-bezier(.2,.9,.2,1);
-}
-
-/* subtle hover on non reduced-motion */
-@media (prefers-reduced-motion: no-preference) {
-  .media-frame:hover .media-img { transform: scale(1.04); }
-}
-
-/* testimonial sits below the media on large screens but visually attached using negative margin */
-.testimonial {
-  width: 100%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius: 12px;
-  padding: 18px;
-  border: 1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 14px 36px rgba(2,6,23,0.45);
-  color: var(--muted);
-  margin-top: -42px;           /* visually lift to sit near bottom of media frame */
-  z-index: 4;
-  position: relative;
-}
-
-/* testimonial content */
-.quote { color: var(--text); font-weight:600; margin:0 0 10px; line-height:1.45; font-size:15px; }
-.who { display:flex; gap:12px; align-items:center; }
-.who-avatar {
-  width:44px; height:44px; border-radius:8px;
-  background: linear-gradient(90deg, rgba(75,198,255,0.08), rgba(59,130,246,0.06));
-  display:flex;align-items:center;justify-content:center;
-  color:var(--accent-a); font-weight:700; border:1px solid rgba(255,255,255,0.03);
-}
-.who-name { color:var(--text); font-weight:700; font-size:14px; }
-.who-role { color:var(--muted); font-size:13px; }
-
-/* CONTENT COLUMN */
-.about-content {
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  gap: 10px;
-}
-
-/* eyebrow */
-.about-content .eyebrow {
-  color: var(--accent-warm);
-  font-weight:800;
-  letter-spacing:1.4px;
-  font-size:13px;
-  margin-bottom:6px;
-}
-
-/* title */
-.about-title {
-  color: var(--text);
-  font-size: clamp(26px, 3.6vw, 40px);
-  margin: 0 0 10px;
-  font-weight:900;
-  line-height:1.04;
-}
-.about-title .accent { color: var(--accent-a); }
-
-/* body */
-.about-body p {
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.75;
-  margin-bottom: 14px;
-}
-
-/* separator */
-.sep {
-  height: 1px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
-  border: none;
-  margin: 20px 0;
-}
+   ABOUT SECTION — Updated & Improved
+   Replace previous about-section rules with this block
 
 
-
-/* Reveal helper for your JS */
-.reveal { transform: translateY(8px); opacity: 0; transition: transform 560ms cubic-bezier(.2,.9,.2,1), opacity 420ms ease; }
-.reveal.show { transform: none; opacity:1; }
-
-/* RESPONSIVE: stack on smaller screens, testimonial becomes inline under image */
-@media (max-width: 980px) {
-  .about-inner { grid-template-columns: 1fr; gap: 28px; }
-  .testimonial { margin-top: 12px; position: relative; }
-  .media-frame { height: 360px; }
-}
-
-/* small devices */
-@media (max-width: 520px) {
-  .media-frame { height: 260px; border-radius: 12px; }
-  .about-title { font-size: 22px; }
-  .about-inner { padding: 0 12px; }
-}
-
-/* focus-visible & accessibility */
-a:focus-visible, button:focus-visible, input:focus-visible {
-  outline: 3px solid rgba(59,130,246,0.12);
-  outline-offset: 2px;
-}
-
-/* reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .reveal, .media-img { transition: none !important; transform: none !important; opacity: 1 !important; }
-}
 /* ====== Strong, guaranteed: One large blue glow behind the services grid ====== */
 /* Paste this at the VERY END of your stylesheet */
 
@@ -2202,3 +1904,296 @@ main {
 
 /* If header/top spacing had conflicts (you have several), ensure main doesn't add extra margin */
 main { margin-top: 0 !important; }
+/* =========================
+   #about-company — Mobile-first, fully scoped CSS
+   Paste this block **only once** (preferably at end of stylesheet).
+   Guarantees readable mobile layout, tidy tablet, and stable 2-column desktop.
+   All selectors are prefixed with #about-company so nothing else is affected.
+   ========================= */
+
+/* ---------- Base (mobile-first) ---------- */
+#about-company {
+  box-sizing: border-box;
+  padding: 20px 12px;
+  background: transparent;
+  color: var(--muted);
+}
+
+#about-company .about-inner {
+  display: block;          /* single column by default on mobile */
+  max-width: var(--container);
+  margin: 0 auto;
+  gap: 18px;
+}
+
+/* media frame (image) */
+#about-company .media-frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 12px 28px rgba(2,6,23,0.36);
+  position: relative;
+}
+
+/* ensure this section's images behave predictably (overrides global duplicates) */
+#about-company .media-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  transition: none !important; /* disable mobile hover transforms */
+}
+
+/* POAA badge: mobile — placed under image so it never overlaps subject */
+#about-company .media-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  margin-left: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 8px 20px rgba(2,6,23,0.18);
+  position: relative; /* not absolute on mobile */
+  z-index: 6;
+}
+
+/* testimonial card (mobile: full width & comfortable padding) */
+#about-company .testimonial {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 12px 30px rgba(2,6,23,0.28);
+}
+
+/* testimonial text + meta */
+#about-company .quote {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+#about-company .who {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+#about-company .who-avatar {
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(90deg, rgba(75,198,255,0.08), rgba(59,130,246,0.06));
+  color: var(--accent-a);
+  font-weight:700;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* content column */
+#about-company .about-content {
+  margin-top: 12px;
+  max-width: 100%;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+#about-company .eyebrow {
+  display:inline-block;
+  color: var(--accent-warm);
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+#about-company .about-title {
+  font-size: 22px;
+  font-weight:900;
+  line-height:1.04;
+  color: var(--text);
+  margin: 6px 0 12px;
+}
+#about-company .about-title .accent { color: var(--accent-a); }
+
+#about-company .about-body p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+/* separator */
+#about-company .sep { margin: 12px 0; height:1px; background: linear-gradient(90deg, rgba(255,255,255,0.04), transparent); border:none; }
+
+/* ---------- Tablet (≥ 600px) ---------- */
+@media (min-width: 600px) {
+  #about-company {
+    padding: clamp(28px, 4vw, 44px) 18px;
+  }
+
+  #about-company .about-inner {
+    display: grid;
+    grid-template-columns: 1fr; /* still single column on small tablets */
+    gap: clamp(18px, 3vw, 28px);
+  }
+
+  #about-company .media-frame { aspect-ratio: 16/9; border-radius: 14px; }
+  #about-company .media-badge { margin-left: 0; } /* keeps badge just under image */
+  #about-company .testimonial { padding: 16px; }
+  #about-company .about-title { font-size: clamp(24px, 3.6vw, 30px); }
+  #about-company .about-body p { font-size: 15px; line-height: 1.75; }
+}
+
+/* ---------- Desktop / Wide (≥ 900px) — stable 2-column layout ---------- */
+@media (min-width: 900px) {
+  #about-company {
+    padding: clamp(36px, 4vw, 88px) 28px;
+  }
+
+  /* left media column fixed width, right column capped for readable measure */
+  #about-company .about-inner {
+    display: grid !important;
+    grid-template-columns: 520px minmax(0, 640px);
+    gap: clamp(24px, 4vw, 48px);
+    align-items: start;
+  }
+
+  /* bring badge into image area on desktop */
+  #about-company .media-badge {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 13px;
+    box-shadow: 0 10px 26px rgba(2,6,23,0.32);
+    backdrop-filter: blur(8px);
+  }
+
+  /* image aspect and subtle hover (reduced-motion respected) */
+  #about-company .media-frame { aspect-ratio: 16/10; border-radius: calc(var(--radius) + 4px); }
+  @media (prefers-reduced-motion: no-preference) {
+    #about-company .media-frame:hover .media-img { transform: scale(1.03); transition: transform .6s ease; }
+  }
+
+  /* testimonial sits beneath image but aligned with left column width */
+  #about-company .testimonial { margin-top: 12px; width: 100%; }
+
+  /* content column */
+  #about-company .about-content { max-width: 640px; padding-left: 6px; }
+  #about-company .about-title { font-size: clamp(30px, 3.6vw, 42px); }
+  #about-company .about-body p { font-size: 16px; line-height: 1.7; }
+}
+
+/* ---------- Very wide screens (≥ 1400px) small polish ---------- */
+@media (min-width: 1400px) {
+  #about-company { padding-left: 40px; padding-right: 40px; }
+  #about-company .about-inner { gap: 48px; }
+}
+
+/* ---------- Safety overrides (only inside this section) ---------- */
+#about-company .media-img { image-rendering: auto; }
+#about-company .testimonial { margin-top: 0 !important; }
+#about-company .about-inner { box-sizing: border-box !important; }
+
+/* ---------- Accessibility: reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  #about-company .media-img,
+  #about-company .reveal {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* End of #about-company scoped CSS */
+/* ============================================================
+   #about-company — Fix Badge Placement + Hover Zoom Effect
+   ============================================================ */
+
+/* --- IMAGE HOVER ZOOM (desktop only) --- */
+@media (hover: hover) and (pointer: fine) {
+  #about-company .media-frame:hover .media-img {
+    transform: scale(1.06);
+    transition: transform .6s ease;
+  }
+}
+
+#about-company .media-img {
+  transition: transform .6s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- MOVE BADGE BELOW IMAGE (always visible UNDER the image) --- */
+#about-company .media-badge {
+  position: static !important;  /* removes absolute inside-image placement */
+  margin-top: 12px;             /* spacing below the image */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 999px;
+  box-shadow: 0 8px 22px rgba(2,6,23,0.28);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================================================
+   ABOUT IMAGE — Super Smooth Cinematic Hover Animation
+   ============================================================ */
+
+#about-company .media-frame {
+  overflow: hidden;
+  border-radius: 16px;
+  transform: translateZ(0); /* smoother GPU animation */
+  will-change: transform, box-shadow;
+  transition: 
+    transform 1.4s cubic-bezier(.15, .55, .15, 1),
+    box-shadow 1.4s cubic-bezier(.15, .55, .15, 1);
+}
+
+#about-company .media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, filter;
+  transition: 
+    transform 1.6s cubic-bezier(.15, .55, .15, 1),
+    filter 1.2s cubic-bezier(.15, .55, .15, 1);
+}
+
+/* Only apply hover on devices that support hover (no mobiles) */
+@media (hover: hover) and (pointer: fine) {
+
+  #about-company .media-frame:hover {
+    transform: translateY(-6px); 
+    box-shadow: 0 32px 80px rgba(0, 200, 255, 0.16);
+  }
+
+  #about-company .media-frame:hover .media-img {
+    transform: scale(1.08) translateY(-4px);  /* smooth float illusion */
+    filter: brightness(1.06) contrast(1.05);
+  }
+}
