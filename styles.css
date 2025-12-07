@@ -2118,3 +2118,87 @@ main {
 .cta-panel h3 {
   white-space: nowrap !important;
 }
+/* ----------------------------
+   Fix: remove extra gap between previous section and CTA (mobile + tablet)
+   Paste at end of stylesheet
+   ---------------------------- */
+
+/* Tighten spacing below sections when CTA follows */
+#cta-hero {
+  /* keep decent spacing on desktop, tightened via media queries below */
+  padding-top: 48px;
+}
+
+/* Reduce bottom spacing of likely preceding sections to remove blank gap */
+.solutions-section,
+.about-section,
+.services-section,
+.values-section,
+.metrics-section {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+}
+
+/* Ensure testimonial negative margin doesn't create large gap on small screens */
+.testimonial {
+  margin-top: -42px; /* desktop look preserved */
+}
+
+/* On tablet & mobile: collapse the gap & neutralize negative margin to prevent gaps */
+@media (max-width: 980px) {
+  /* tighten preceding sections and CTA padding for medium screens */
+  .solutions-section,
+  .about-section,
+  .services-section,
+  .values-section,
+  .metrics-section {
+    margin-bottom: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  #cta-hero {
+    padding-top: 36px !important;
+  }
+
+  .testimonial {
+    margin-top: 12px !important; /* prevent large visual gap created by negative margin */
+  }
+}
+
+@media (max-width: 560px) {
+  /* mobile: remove almost all spacing between sections, but keep small breathing room */
+  .solutions-section,
+  .about-section,
+  .services-section,
+  .values-section,
+  .metrics-section {
+    margin-bottom: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* make CTA sit close to previous section */
+  #cta-hero {
+    padding-top: 18px !important;
+    padding-bottom: 28px !important;
+  }
+
+  /* testimonial should flow naturally under media on mobile */
+  .testimonial {
+    margin-top: 12px !important;
+  }
+
+  /* if you still see a gap introduced by specific page wrappers, target them here */
+  .section-wrapper,
+  .content-block {
+    margin-bottom: 8px !important;
+    padding-bottom: 8px !important;
+  }
+}
+
+/* Small safety: keep CTA panel visual separation but no extra empty gap */
+.cta-panel {
+  margin-top: 6px; /* tiny lift so it doesn't stick to previous content */
+}
+
+/* If header/top spacing had conflicts (you have several), ensure main doesn't add extra margin */
+main { margin-top: 0 !important; }
