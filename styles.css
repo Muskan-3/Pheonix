@@ -646,6 +646,8 @@ body > *:not(#bgMeshCanvas) { position: relative; z-index: 1; }
   color: #fff;
   font-weight: 600;
   line-height: 1.1;
+  padding-bottom: 23px;
+  padding-right:15px;
 }
 
 .badge-title {
@@ -968,7 +970,7 @@ backdrop-filter: blur(8px);
   color: var(--text);
   font-size: clamp(28px, 4.6vw, 64px);
   font-weight: 800;
-  line-height: 1.02;
+  line-height: 1.06;
   margin: 4px 0 18px;
   letter-spacing: -0.02em;
 }
@@ -2112,3 +2114,8 @@ main {
   margin-top: 0 !important;
 }
 
+/* Force CTA title to stay on one line */
+.cta-panel .cta-title,
+.cta-title {
+  white-space: nowrap !important;
+}

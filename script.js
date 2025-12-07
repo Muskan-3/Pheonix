@@ -1037,7 +1037,7 @@ document.getElementById("footerYear").textContent = new Date().getFullYear();
   let width = 0;
   let height = 0;
   let dpr = 1;
-  const MAX_DPR = 1.6;
+  const MAX_DPR = 1.7;
   const nodes = [];
 
   function isSmall() {
@@ -1061,8 +1061,8 @@ document.getElementById("footerYear").textContent = new Date().getFullYear();
     nodes.length = 0;
 
     const count = isSmall() ? 18 : 40;       // fewer on phones, more on desktop
-    const speed = isSmall() ? 0.06 : 0.12;   // saved on each node
-    const DOT_MIN = 1;
+    const speed = isSmall() ? 0.07 : 0.12;   // saved on each node
+    const DOT_MIN = 2;
     const DOT_MAX = 2;
 
     for (let i = 0; i < count; i++) {
