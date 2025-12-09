@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us – Phoenix Publicity</title>
+<link rel="stylesheet" href="contact.css">
+</head>
+<style>
+    /* GLOBAL */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Poppins", sans-serif;
+  background: radial-gradient(circle at top,#062246 0,#020816 45%,#020612 100%);
+  color:#fff;
+}
+.container{
+  width:min(1200px,92%);
+  margin:auto;
+  padding:80px 0;
+}
+
+/* GRID LAYOUT */
+.contact-section{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:center;
+}
+
+/* LEFT PART */
+.small-heading{
+  color:#4bb8ff;
+  font-size:0.85rem;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+.contact-title{
+  font-size:2.6rem;
+  font-weight:800;
+  margin-bottom:18px;
+}
+.contact-desc{
+  font-size:1rem;
+  color:#d5e4ff;
+}
+
+/* RIGHT FORM CARD */
+.contact-form{
+  background:#ffffff;
+  padding:35px;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.35);
+}
+.input-group{
+  display:flex;
+  gap:20px;
+  margin-bottom:18px;
+}
+input,textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #d9d9d9;
+  font-size:0.9rem;
+}
+textarea{
+  height:120px;
+  resize:none;
+  margin-bottom:20px;
+}
+
+/* BUTTON */
+.send-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  background:#1fb4ff;
+  color:#002244;
+  font-size:0.95rem;
+  font-weight:700;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.send-btn:hover{
+  background:#0ea4ef;
+  box-shadow:0 12px 25px rgba(0,180,255,0.28);
+}
+
+/* MAP */
+.map-section iframe{
+  border:0;
+  margin-top:40px;
+  width:100%;
+  border-radius:12px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .contact-section{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .input-group{flex-direction:column}
+}
+
+</style>
+<body>
+
+<section class="contact-section container">
+
+  <div class="contact-left">
+    <h3 class="small-heading">CONTACT US</h3>
+    <h2 class="contact-title">
+      Let’s Discuss Your New<br> Projects Now
+    </h2>
+    <p class="contact-desc">
+      We’re here to help with OOH Advertising, Branding and Media Planning for your brand.
+    </p>
+  </div>
+
+  <div class="contact-right">
+    <form class="contact-form" action="#" method="POST">
+
+      <div class="input-group">
+        <input type="text" placeholder="First Name *" required>
+        <input type="text" placeholder="Last Name *" required>
+      </div>
+
+      <div class="input-group">
+        <input type="email" placeholder="Email Address *" required>
+        <input type="text" placeholder="Subject *" required>
+      </div>
+
+      <textarea placeholder="Comments / Questions *" required></textarea>
+
+      <button type="submit" class="send-btn">SEND MESSAGE</button>
+
+    </form>
+  </div>
+
+</section>
+
+<!-- MAP SECTION OPTIONAL -->
+<section class="map-section">
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.091..."
+    width="100%" height="350" allowfullscreen="" loading="lazy">
+  </iframe>
+</section>
+
+</body>
+</html>
