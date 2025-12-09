@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services – What We Offer</title>
+
+  <style>
+    /* ---------- GLOBAL ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #062246 0, #020816 45%, #020612 100%);
+      color: #ffffff;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: min(1200px, 100% - 40px);
+      margin: 0 auto;
+    }
+
+    /* ---------- SECTION HEADER ---------- */
+    .services-section {
+      padding: 80px 0 100px;
+      text-align: center;
+    }
+
+    .services-title {
+      font-size: clamp(2.5rem, 4vw, 3.2rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    .services-title span {
+      background: linear-gradient(90deg, #1fb4ff, #4d7dff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .services-subtitle {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      font-size: 0.98rem;
+      color: #a3b3d3;
+    }
+
+    /* ---------- GRID ---------- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    /* ---------- CARD ---------- */
+    .service-card {
+      background: radial-gradient(circle at top left, #192a4e 0, #040915 55%);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(85, 140, 255, 0.25);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease,
+        border-color 0.25s ease, background 0.25s ease;
+      position: relative;
+    }
+
+    .service-card::before {
+      /* subtle glow on hover */
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: radial-gradient(circle at top, rgba(54, 175, 255, 0.4), transparent 60%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: -1;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.9);
+      border-color: rgba(85, 140, 255, 0.65);
+      background: radial-gradient(circle at top left, #1a325e 0, #050b18 60%);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .service-content {
+      padding: 16px 20px 20px;
+      text-align: left;
+    }
+
+    .service-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .service-text {
+      font-size: 0.9rem;
+      color: #bbc7e5;
+    }
+
+    /* ---------- CUSTOM SOLUTION CARD ---------- */
+    .service-card.custom-card {
+      background: linear-gradient(160deg, #1fb4ff, #4d7dff, #0072ff);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      padding: 28px 24px;
+    }
+
+    .service-card.custom-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.9);
+    }
+
+    .custom-inner {
+      max-width: 260px;
+    }
+
+    .custom-heading {
+      font-size: 1.7rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .custom-text {
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .custom-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #ffffff;
+      color: #0040a8;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.2s ease, color 0.2s ease;
+    }
+
+    .custom-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.4);
+      background: #e7f0ff;
+      color: #00327f;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 600px) {
+      .services-section {
+        padding: 60px 0 70px;
+      }
+      .services-title {
+        font-size: 2.1rem;
+      }
+      .service-image {
+        height: 170px;
+      }
+      .service-card.custom-card {
+        text-align: center;
+      }
+      .custom-inner {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="services-section">
+    <div class="container">
+
+      <h2 class="services-title">What We <span>Offer</span></h2>
+      <p class="services-subtitle">
+        Comprehensive outdoor advertising solutions tailored to elevate your brand
+        and accelerate your growth.
+      </p>
+
+      <div class="services-grid">
+        <!-- Card 1 -->
+        <article class="service-card">
+          <img src="images/hoardings.jpg" alt="Hoardings" class="service-image" />
+          <div class="service-content">
+            <h3 class="service-title">Hoardings</h3>
+            <p class="service-text">
+              Premium billboard locations across high-traffic junctions for maximum visibility.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="service-card">
+          <img src="images/mall-branding.jpg" alt="Mall Branding" class="service-image" />
+          <div class="service-content">
+            <h3 class="service-title">Mall Branding</h3>
+            <p class="service-text">
+              Strategic in-mall branding including facades, escalators, and food courts.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="service-card">
+          <img src="images/mobile-van.jpg" alt="Mobile Van" class="service-image" />
+          <div class="service-content">
+            <h3 class="service-title">Mobile Van</h3>
+            <p class="service-text">
+              Dynamic mobile advertising vehicles reaching audiences across the city.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="service-card">
+          <img src="images/bus-branding.jpg" alt="Bus Branding" class="service-image" />
+          <div class="service-content">
+            <h3 class="service-title">Bus Branding</h3>
+            <p class="service-text">
+              Full bus wraps and panels covering extensive city routes for strong recall.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="service-card">
+          <img src="images/bus-shelter.jpg" alt="Bus Shelters" class="service-image" />
+          <div class="service-content">
+            <h3 class="service-title">Bus Shelters</h3>
+            <p class="service-text">
+              Eye-level advertising at high-footfall bus shelters across prime locations.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="service-card">
+          <img src="images/auto-rickshaw.jpg" alt="Auto Rickshaw" class="service-image" />
+          <div class="service-content">
+            <h3 class="service-title">Auto Rickshaw</h3>
+            <p class="service-text">
+              Hyperlocal campaigns with auto branding moving through dense city pockets.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 7 -->
+        <article class="service-card">
+          <img src="images/kiosk.jpg" alt="Kiosks" class="service-image" />
+          <div class="service-content">
+            <h3 class="service-title">Kiosks</h3>
+            <p class="service-text">
+              Stand-alone kiosk advertising for sharper brand recall at key touchpoints.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 8 – Custom Solution -->
+        <article class="service-card custom-card">
+          <div class="custom-inner">
+            <h3 class="custom-heading">Need Custom Solution?</h3>
+            <p class="custom-text">
+              Tell us your goals and we’ll craft a tailor-made outdoor advertising plan for your brand.
+            </p>
+            <a href="#contact" class="custom-btn">Talk to Our Team</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
